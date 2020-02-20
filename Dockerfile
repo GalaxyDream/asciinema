@@ -1,3 +1,6 @@
+## reference: https://github.com/asciinema/asciinema/blob/develop/Dockerfile; https://linuxize.com/post/how-to-install-r-on-ubuntu-18-04/ 
+## -*- mode: sh; -*-
+
 FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y \
@@ -19,4 +22,11 @@ ENV LANG en_US.utf8
 ENV SHELL /bin/bash
 ENV USER docker
 WORKDIR /root
-ENTRYPOINT ["/usr/local/bin/asciinema"]
+
+# Install R-3.6
+
+RUN apt install apt-transport-https software-properties-common
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+RUN apt update
+RUN apt install -yq r-base
